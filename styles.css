@@ -1,0 +1,14 @@
+/* ===== BASE THEME STYLES ===== */
+    body{font-family:'Inter',sans-serif;background:#1A0A2E;color:#fff;scroll-behavior:smooth}
+    .font-display{font-family:'Playfair Display',serif}
+    .glow{box-shadow:0 0 40px rgba(139,92,246,.18)}
+    /* ===== CARD INTERACTIONS ===== */
+    .hover-lift{transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+    .hover-lift:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+    /* ===== HERO DECORATION ===== */
+    .hero-sheen{background:radial-gradient(circle at top, rgba(212,175,55,.16), transparent 30%),linear-gradient(135deg,#1A0A2E 0%,#2D1B69 100%)}
+    /* ===== BUTTONS ===== */
+    .btn-gold{background:#D4AF37;color:#1A0A2E;transition:all .3s ease}
+    .btn-gold:hover{filter:brightness(1.06);transform:translateY(-2px)}
+    .btn-outline{border:1px solid #8B5CF6;color:#fff;transition:all .3s ease}
+    .btn-outline:hover{background:rgba(139,92,246,.12);transform:translateY(-2px)}
