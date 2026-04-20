@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+
+<!-- SEO Meta Tags -->
+<title>Luxe Locks Salon | Luxury Hair Salon in Sacramento</title>
+<meta name="description" content="Experience Luxe Locks Salon in Sacramento with luxury cuts, color, styling, bridal services, and an AI concierge booking widget in a dark editorial aesthetic." />
+<meta property="og:title" content="Luxe Locks Salon | Luxury Hair Salon in Sacramento" />
+<meta property="og:description" content="Experience Luxe Locks Salon in Sacramento with luxury cuts, color, styling, bridal services, and an AI concierge booking widget in a dark editorial aesthetic." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Luxe Locks Salon | Luxury Hair Salon in Sacramento" />
+<meta name="twitter:description" content="Experience Luxe Locks Salon in Sacramento with luxury cuts, color, styling, bridal services, and an AI concierge booking widget in a dark editorial aesthetic." />
+<!-- End SEO Meta Tags -->
+
+<script data-field-replace>
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var fields={};
+  var paramMap={
+    'first_name':'firstName','last_name':'lastName','full_name':'fullName',
+    'email':'email','phone':'phone','company':'company',
+    'city':'city','state':'state','country':'country'
+  };
+  var skipTags={'SCRIPT':1,'STYLE':1,'NOSCRIPT':1,'TEXTAREA':1,'CODE':1,'PRE':1};
+  var hasUrlFields=false;
+  for(var p in paramMap){
+    var v=params.get(p);
+    if(v){fields[paramMap[p]]=v;hasUrlFields=true;}
+  }
+  var contactId=params.get('contact_id');
+  function esc(s){
+    if(!s)return s;
+    var d=document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+  function doReplace(data){
+    var r={};
+    r['{{full_name}}']=esc(((data.firstName||'')+' '+(data.lastName||'')).trim()||((data.fullName||data.name)||''));
+    r['{{first_name}}']=esc(data.firstName||(data.name?data.name.split(' ')[0]:'')||'');
+    r['{{last_name}}']=esc(data.lastName||(data.name&&data.name.indexOf(' ')>-1?data.name.substring(data.name.indexOf(' ')+1):'')||'');
+    r['{{email}}']=esc(data.email||'');
+    r['{{phone}}']=esc(data.phone||'');
+    r['{{company}}']=esc(data.company||'');
+    r['{{city}}']=esc(data.city||'');
+    r['{{state}}']=esc(data.state||'');
+    r['{{country}}']=esc(data.country||'');
+    r['{{date}}']=new Date().toLocaleDateString();
+    r['{{time}}']=new Date().toLocaleTimeString();
+    r['{{location}}']=[data.city,data.state,data.country].filter(Boolean).join(', ');
+    r['{{tracking_id}}']=esc(data.trackingId||'');
+    r['{{lastClickedProduct}}']=esc(data.lastClickedProduct||'');
+    r['{{lastProductClickDate}}']=esc(data.lastProductClickDate||'');
+    r['{{lastClickedProductPrice}}']=esc(data.lastClickedProductPrice||'');
+    r['{{lastClickedProductURL}}']=esc(data.lastClickedProductURL||'');
+    r['{{productsClickedCount}}']=esc(data.productsClickedCount||'0');
+    r['{{ip_address}}']=esc(data.ipAddress||'');
+    r['{{ip}}']=esc(data.ipAddress||'');
+    if(data.customFields){
+      for(var k in data.customFields){
+        r['{{'+k+'}}']=esc(String(data.customFields[k]||''));
+      }
+    }
+    params.forEach(function(v,k){
+      if(!paramMap[k]&&k!=='contact_id'&&k!=='page_id'&&k.indexOf('utm_')!==0){
+        r['{{'+k+'}}']=esc(v);
+      }
+    });
+    var hasValues=false;
+    for(var key in r){if(r[key]){hasValues=true;break;}}
+    if(!hasValues)return;
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+      acceptNode:function(n){
+        var p=n.parentNode;
+        if(p&&skipTags[p.nodeName])return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while(node=walker.nextNode()){
+      var txt=node.nodeValue;
+      if(txt&&txt.indexOf('{{')>-1){
+        var changed=txt;
+        for(var ph in r){
+          if(r[ph]&&changed.indexOf(ph)>-1){
+            changed=changed.split(ph).join(r[ph]);
+          }
+        }
+        if(changed!==txt)node.nodeValue=changed;
+      }
+    }
+    var attrs=['value','placeholder','content','alt','title'];
+    attrs.forEach(function(attr){
+      var els=document.querySelectorAll('['+attr+'*="{{"]');
+      for(var i=0;i<els.length;i++){
+        var tag=els[i].tagName;
+        if(skipTags[tag])continue;
+        var val=els[i].getAttribute(attr);
+        if(val){
+          var nv=val;
+          for(var ph in r){
+            if(r[ph]&&nv.indexOf(ph)>-1){
+              nv=nv.split(ph).join(r[ph]);
+            }
+          }
+          if(nv!==val)els[i].setAttribute(attr,nv);
+        }
+      }
+    });
+  }
+  function run(){
+    if(contactId){
+      var xhr=new XMLHttpRequest();
+      xhr.open('GET','https://paymegpt.com/api/landing/context/'+encodeURIComponent(contactId)+'?page_id=3382');
+      xhr.onload=function(){
+        if(xhr.status===200){
+          try{
+            var resp=JSON.parse(xhr.responseText);
+            if(resp.success&&resp.contact){
+              var merged=resp.contact;
+              for(var k in fields){merged[k]=fields[k];}
+              doReplace(merged);
+              return;
+            }
+          }catch(e){}
+        }
+        if(hasUrlFields)doReplace(fields);
+      };
+      xhr.onerror=function(){if(hasUrlFields)doReplace(fields);};
+      xhr.send();
+    }else if(hasUrlFields){
+      doReplace(fields);
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);}
+  else{run();}
+})();
+</script>
+<script data-payment>
+(function(){
+  var slug='kwfiJER2';
+  var apiBase='https://paymegpt.com';
+  function findEmail(){
+    var ids=['email','emailAddress','buyer-email','buyerEmail','user-email','userEmail','checkout-email','customer-email','contact-email'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value&&el.value.includes('@'))return el.value.trim();}
+    var inputs=document.querySelectorAll('input[type="email"],input[name*="email"],input[placeholder*="email"],input[placeholder*="Email"]');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value&&inputs[j].value.includes('@'))return inputs[j].value.trim();}
+    return '';
+  }
+  function findName(){
+    var ids=['name','fullName','full-name','buyer-name','buyerName','customer-name','userName','user-name'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value)return el.value.trim();}
+    var inputs=document.querySelectorAll('input[name*="name"]:not([name*="email"]):not([type="email"]),input[placeholder*="name"]:not([placeholder*="email"]):not([type="email"]),input[placeholder*="Name"]:not([type="email"])');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value)return inputs[j].value.trim();}
+    return '';
+  }
+  var __realProcessPayment=function(a,b,c,d,e){
+    var amountCents,email,productName,productDescription,customerName,quantity;
+    if(a&&typeof a==='object'){
+      amountCents=a.amountCents;email=a.email;productName=a.productName;
+      productDescription=a.productDescription||'';customerName=a.name||'';quantity=a.quantity||1;
+    }else{
+      amountCents=typeof a==='number'?a:0;productName=typeof b==='string'?b:'';
+      productDescription=typeof c==='string'?c:'';email='';customerName='';quantity=1;
+    }
+    if(!email)email=findEmail();
+    if(!customerName)customerName=findName();
+    if(!productName){alert('Product name is required.');return Promise.reject('no_product_name');}
+    if(!amountCents||amountCents<100){alert('Amount must be at least $1.00');return Promise.reject('invalid_amount');}
+    if(!email){alert('Please enter your email address.');return Promise.reject('no_email');}
+    var successBase=window.location.href.split('?')[0];
+    return fetch(apiBase+'/api/landing-pages/public/'+slug+'/payment/checkout',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,name:customerName,amountCents:amountCents,productName:productName,productDescription:productDescription,quantity:quantity,successUrl:successBase+'?payment=success&product='+encodeURIComponent(productName)+'&session_id={CHECKOUT_SESSION_ID}',cancelUrl:successBase+'?payment=cancelled'})
+    }).then(function(r){return r.json();}).then(function(d){
+      if(d.checkoutUrl){window.location.href=d.checkoutUrl;}
+      else{alert(d.error||'Failed to process payment');throw new Error(d.error);}
+    });
+  };
+  Object.defineProperty(window,'__processPayment',{value:__realProcessPayment,writable:false,configurable:false});
+  document.addEventListener('DOMContentLoaded',function(){
+    var urlParams=new URLSearchParams(window.location.search);
+    if(urlParams.get('payment')==='success'){
+      var pName=urlParams.get('product')||'your item';
+      var overlay=document.createElement('div');overlay.id='payment-success-overlay';
+      overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999999;font-family:system-ui,-apple-system,sans-serif;';
+      overlay.innerHTML='<div style="background:white;border-radius:16px;padding:40px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.15);"><div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><h2 style="margin:0 0 12px;font-size:24px;font-weight:700;color:#111827;">Payment Successful!</h2><p style="margin:0 0 24px;color:#6b7280;font-size:16px;">Thank you for purchasing '+pName.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'.</p><button onclick="document.getElementById(\'payment-success-overlay\').remove();window.history.replaceState({},\'\',window.location.pathname);" style="padding:12px 32px;font-size:16px;font-weight:600;background:#16a34a;color:white;border:none;border-radius:8px;cursor:pointer;">Continue</button></div>';
+      document.body.appendChild(overlay);
+    }
+  });
+})();
+</script>  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="antialiased">
+  <!-- ============================================================================ -->
+  <!-- NAVBAR SECTION: Minimal editorial header with brand and quick anchor links   -->
+  <!-- Features: Luxurious typography, compact layout, mobile-safe padding          -->
+  <!-- ============================================================================ -->
+  <nav data-section="navbar" class="sticky top-0 z-40 border-b border-white/10 bg-[#1A0A2E]/90 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 md:px-8 lg:px-12">
+      <a href="#hero" class="font-display text-xl tracking-wide text-[#D4AF37]">Luxe Locks Salon</a>
+      <div class="hidden gap-8 text-sm text-white/80 md:flex">
+        <a href="#services" class="hover:text-[#D4AF37]">Services</a>
+        <a href="#stylists" class="hover:text-[#D4AF37]">Stylists</a>
+        <a href="#experience" class="hover:text-[#D4AF37]">Experience</a>
+        <a href="#details" class="hover:text-[#D4AF37]">Details</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================================ -->
+  <!-- HERO SECTION: Main landing area with headline, subtext, and primary CTA     -->
+  <!-- Features: Gradient background, elegant icon, prominent CTAs, responsive     -->
+  <!-- Mobile Padding: Ensures text never touches viewport edges                   -->
+  <!-- ============================================================================ -->
+  <section data-section="hero" id="hero" class="hero-section hero-sheen">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:px-8 lg:px-12 lg:py-28">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
+        <div class="space-y-8">
+          <div class="inline-flex items-center gap-3 rounded-full border border-[#D4AF37]/30 bg-white/5 px-4 py-2 text-sm text-white/80">
+            <span class="text-[#D4AF37]">✦</span>
+            Sacramento’s Premier Luxury Hair Salon
+          </div>
+          <div class="relative">
+            <svg class="absolute -left-2 -top-10 h-16 w-16 text-[#D4AF37]/90" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <path d="M18 46L46 18M21 18l25 25M18 18l28 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M45 13c2 5 5 8 10 10-5 2-8 5-10 10-2-5-5-8-10-10 5-2 8-5 10-10Z" fill="currentColor" opacity=".9"/>
+            </svg>
+            <h1 class="font-display text-5xl leading-tight text-white sm:text-6xl lg:text-7xl">Where Every Strand Tells a Story</h1>
+          </div>
+          <p class="max-w-xl text-lg leading-8 text-white/80 sm:text-xl">Sacramento's Premier Luxury Hair Salon — Expert Cuts, Color &amp; Styling</p>
+          <div class="flex flex-col gap-4 sm:flex-row">
+            <a href="#chat-widget-container" class="btn-gold rounded-full px-7 py-4 text-center font-semibold shadow-lg shadow-[#D4AF37]/20">Book Your Appointment</a>
+            <a href="#services" class="btn-outline rounded-full px-7 py-4 text-center font-semibold">View Services</a>
+          </div>
+        </div>
+        <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/30 glow">
+          <div class="aspect-[4/5] rounded-[1.6rem] border border-[#D4AF37]/20 bg-[radial-gradient(circle_at_top,_rgba(212,175,55,.18),_transparent_35%),linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02))] p-8">
+            <div class="flex h-full flex-col justify-between rounded-[1.2rem] border border-white/10 p-6 backdrop-blur-sm">
+              <div class="space-y-4">
+                <p class="text-sm uppercase tracking-[.35em] text-[#D4AF37]">Editorial Beauty</p>
+                <p class="font-display text-3xl text-white">A private salon experience designed around you.</p>
+              </div>
+              <div class="grid grid-cols-2 gap-4 text-sm text-white/75">
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4">Precision Cuts</div>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4">Luxury Color</div>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4">Bridal Styling</div>
+                <div class="rounded-2xl border border-white/10 bg-black/20 p-4">Gloss Treatments</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================ -->
+  <!-- SERVICES SECTION: Dark card grid showcasing signature offerings              -->
+  <!-- Features: 2x2 responsive layout, gold accents, hover glow, price ranges      -->
+  <!-- ============================================================================ -->
+  <section data-section="services" id="services" class="bg-[#1A0A2E]">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:px-8 lg:px-12">
+      <div class="mb-12 max-w-2xl">
+        <p class="text-sm uppercase tracking-[.35em] text-[#D4AF37]">Services</p>
+        <h2 class="mt-3 font-display text-4xl text-white sm:text-5xl">Tailored artistry for every occasion</h2>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        <article class="hover-lift rounded-3xl border border-[#8B5CF6]/40 bg-white/5 p-8">
+          <div class="text-3xl text-[#D4AF37]">✂️</div><h3 class="mt-4 font-display text-2xl text-white">Haircuts</h3>
+          <p class="mt-2 text-white/70">Women's $65–$95 | Men's $35–$50 | Kids $25–$35</p><p class="mt-4 text-[#D4AF37] font-semibold">Precision shaping, movement, and polish.</p>
+        </article>
+        <article class="hover-lift rounded-3xl border border-[#8B5CF6]/40 bg-white/5 p-8">
+          <div class="text-3xl text-[#D4AF37]">🎨</div><h3 class="mt-4 font-display text-2xl text-white">Color Services</h3>
+          <p class="mt-2 text-white/70">Single Process $85–$120 | Balayage $200–$300 | Highlights $120–$220</p><p class="mt-4 text-[#D4AF37] font-semibold">Rich dimension with bespoke tone matching.</p>
+        </article>
+        <article class="hover-lift rounded-3xl border border-[#8B5CF6]/40 bg-white/5 p-8">
+          <div class="text-3xl text-[#D4AF37]">💨</div><h3 class="mt-4 font-display text-2xl text-white">Styling &amp; Blowouts</h3>
+          <p class="mt-2 text-white/70">Blowout $45–$55 | Special Occasion $85–$150 | Bridal $175–$250</p><p class="mt-4 text-[#D4AF37] font-semibold">Red-carpet finish with luminous shine.</p>
+        </article>
+        <article class="hover-lift rounded-3xl border border-[#8B5CF6]/40 bg-white/5 p-8">
+          <div class="text-3xl text-[#D4AF37]">✨</div><h3 class="mt-4 font-display text-2xl text-white">Treatments</h3>
+          <p class="mt-2 text-white/70">Deep Conditioning $35–$50 | Keratin $250–$350 | Olaplex Add-On $35</p><p class="mt-4 text-[#D4AF37] font-semibold">Restore softness, strength, and brilliance.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================ -->
+  <!-- STYLISTS SECTION: Light lavender editorial team showcase                     -->
+  <!-- Features: Portrait-style cards, initials avatars, elegant bios               -->
+  <!-- ============================================================================ -->
+  <section data-section="stylists" id="stylists" class="bg-[#F5F3FF] text-[#1A0A2E]">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:px-8 lg:px-12">
+      <div class="mb-12 max-w-2xl">
+        <p class="text-sm uppercase tracking-[.35em] text-[#6D28D9]">Meet the Stylists</p>
+        <h2 class="mt-3 font-display text-4xl sm:text-5xl">A collective of experts with a fashion-forward eye</h2>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <article class="hover-lift rounded-3xl bg-white p-6 shadow-sm">
+          <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#8B5CF6] to-[#2D1B69] text-2xl font-bold text-[#D4AF37]">MC</div>
+          <h3 class="mt-5 font-display text-2xl">Mia Chen</h3><p class="italic text-[#6D28D9]">Color Specialist</p><p class="mt-3 text-sm text-black/70">Balayage and vivid color wizard with 12 years experience.</p>
+        </article>
+        <article class="hover-lift rounded-3xl bg-white p-6 shadow-sm">
+          <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#8B5CF6] to-[#2D1B69] text-2xl font-bold text-[#D4AF37]">JL</div>
+          <h3 class="mt-5 font-display text-2xl">Jordan Lee</h3><p class="italic text-[#6D28D9]">Precision Cuts</p><p class="mt-3 text-sm text-black/70">Master of the perfect cut — from bobs to textured layers.</p>
+        </article>
+        <article class="hover-lift rounded-3xl bg-white p-6 shadow-sm">
+          <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#8B5CF6] to-[#2D1B69] text-2xl font-bold text-[#D4AF37]">TW</div>
+          <h3 class="mt-5 font-display text-2xl">Tasha Williams</h3><p class="italic text-[#6D28D9]">Bridal &amp; Updos</p><p class="mt-3 text-sm text-black/70">Your dream wedding hair, flawlessly executed.</p>
+        </article>
+        <article class="hover-lift rounded-3xl bg-white p-6 shadow-sm">
+          <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-[#8B5CF6] to-[#2D1B69] text-2xl font-bold text-[#D4AF37]">AR</div>
+          <h3 class="mt-5 font-display text-2xl">Alex Rivera</h3><p class="italic text-[#6D28D9]">All-Around Stylist</p><p class="mt-3 text-sm text-black/70">From everyday glam to full transformations.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================ -->
+  <!-- EXPERIENCE SECTION: White premium value proposition with three columns       -->
+  <!-- Features: Purple icons, gold accents, clean editorial spacing                -->
+  <!-- ============================================================================ -->
+  <section data-section="experience" id="experience" class="bg-white text-[#1A0A2E]">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:px-8 lg:px-12">
+      <div class="mb-12 max-w-2xl">
+        <p class="text-sm uppercase tracking-[.35em] text-[#6D28D9]">The Luxe Experience</p>
+        <h2 class="mt-3 font-display text-4xl sm:text-5xl">Luxury details that elevate every visit</h2>
+      </div>
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="rounded-3xl border border-[#8B5CF6]/20 bg-[#F5F3FF] p-8">
+          <div class="text-3xl text-[#8B5CF6]">🏆</div><h3 class="mt-4 font-display text-2xl">Expert Stylists</h3><div class="mt-3 h-1 w-16 bg-[#D4AF37]"></div><p class="mt-4 text-black/75">Certified professionals with 10+ years average experience and ongoing education.</p>
+        </div>
+        <div class="rounded-3xl border border-[#8B5CF6]/20 bg-[#F5F3FF] p-8">
+          <div class="text-3xl text-[#8B5CF6]">💜</div><h3 class="mt-4 font-display text-2xl">Premium Products</h3><div class="mt-3 h-1 w-16 bg-[#D4AF37]"></div><p class="mt-4 text-black/75">Olaplex, Redken, and luxury color lines selected for performance and brilliance.</p>
+        </div>
+        <div class="rounded-3xl border border-[#8B5CF6]/20 bg-[#F5F3FF] p-8">
+          <div class="text-3xl text-[#8B5CF6]">✨</div><h3 class="mt-4 font-display text-2xl">Personalized Consultations</h3><div class="mt-3 h-1 w-16 bg-[#D4AF37]"></div><p class="mt-4 text-black/75">One-on-one attention tailored to your hair goals, lifestyle, and finish.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================ -->
+  <!-- BOOKING SECTION: AI concierge callout with widget embed container            -->
+  <!-- Features: Full-width banner, centered copy, booking assistant placeholder    -->
+  <!-- ============================================================================ -->
+  <section data-section="booking" class="bg-[#2D1B69]">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:px-8 lg:px-12">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-sm uppercase tracking-[.35em] text-[#D4AF37]">AI Concierge</p>
+        <h2 class="mt-3 font-display text-4xl text-white sm:text-5xl">Book Your Appointment in Minutes</h2>
+        <p class="mt-4 text-lg text-white/80">Chat with our AI concierge — available 24/7 to find your perfect service, stylist, and time slot.</p>
+      </div>
+      <div id="chat-widget-container" class="widget-embed-area mx-auto mt-10 min-h-[500px] max-w-5xl rounded-3xl border border-white/10 bg-black/20 p-6">
+        <div class="flex min-h-[500px] items-center justify-center rounded-2xl border border-dashed border-white/15 text-white/70">Loading booking assistant...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================ -->
+  <!-- DETAILS SECTION: Practical salon information with refined presentation       -->
+  <!-- Features: Split layout, hours, address, contact, walk-ins note               -->
+  <!-- ============================================================================ -->
+  <section data-section="details" id="details" class="bg-[#1A0A2E] text-white">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 md:px-8 lg:px-12">
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div>
+          <p class="text-sm uppercase tracking-[.35em] text-[#D4AF37]">Salon Details</p>
+          <h2 class="mt-3 font-display text-4xl sm:text-5xl">Visit our Sacramento studio</h2>
+          <div class="mt-8 space-y-6 text-white/80">
+            <div><p class="text-[#D4AF37] font-semibold">Hours</p><p>Tue–Sat 9am–7pm</p><p>Closed Sun–Mon</p></div>
+            <div><p class="text-[#D4AF37] font-semibold">Address</p><p>1234 Elm St, Suite 200, Sacramento CA 95814</p></div>
+            <div><p class="text-[#D4AF37] font-semibold">Phone</p><p>(916) 555-5893</p></div>
+            <div><p class="text-[#D4AF37] font-semibold">Walk-ins</p><p>Welcome Tue–Thu</p></div>
+          </div>
+        </div>
+        <div class="rounded-3xl border border-[#D4AF37]/50 bg-white/5 p-8 shadow-2xl shadow-black/30">
+          <div class="rounded-2xl border border-[#D4AF37]/30 p-8">
+            <p class="text-sm uppercase tracking-[.3em] text-[#D4AF37]">Private Appointment House</p>
+            <h3 class="mt-4 font-display text-3xl text-white">Thoughtful service, impeccable finish.</h3>
+            <p class="mt-4 leading-7 text-white/75">From first consultation to final styling, every detail is designed to feel calm, refined, and unmistakably luxe.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================ -->
+  <!-- FOOTER SECTION: Minimal luxury footer with brand statement and copyright      -->
+  <!-- Features: Gold branding, editorial closing line, subtle structure            -->
+  <!-- ============================================================================ -->
+  <footer data-section="footer" class="bg-[#1A0A2E] border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-4 py-10 text-center sm:px-6 md:px-8 lg:px-12">
+      <div class="font-display text-3xl text-[#D4AF37]">Luxe Locks Salon</div>
+      <p class="mt-3 text-white/75">Crafted for You. Perfected Every Time.</p>
+      <p class="mt-6 text-sm text-white/45">Copyright 2026 Luxe Locks Salon.</p>
+    </div>
+  </footer>
+
+  <script src="https://paymegpt.com/widget.js" data-widget="76491599" async></script>
+</body>
+</html>
